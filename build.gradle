@@ -36,6 +36,7 @@ repositories {
     maven { url 'https://plugins.gradle.org/m2' }
     maven { url 'https://jitpack.io' }
     maven { url 'https://repo.aikar.co/content/groups/aikar/' }
+
 }
 
 
@@ -54,18 +55,31 @@ dependencies {
 	testAnnotationProcessor 'org.projectlombok:lombok:1.18.12'
     //ACF
     implementation 'co.aikar:acf-paper:0.5.0-SNAPSHOT'
-    //GUIs
-    implementation 'com.github.noobstersmc:RapidInv:v0.0.1'
+
+    //TWITCH
+    implementation 'com.github.twitch4j:twitch4j:1.5.0'
+
+    compileOnly 'com.fasterxml.jackson.core:jackson-core:2.12.5'
+    compileOnly 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
+    compileOnly 'com.fasterxml.jackson.core:jackson-annotations:2.12.5'
 
 }
 
 spigot {
     authors 'aleiv'
-    apiVersion '1.17'
+    apiVersion '1.16'
     version '0.1'
-    name 'CoreTemplate'
+    name 'DedsafioBits'
     load STARTUP
     //depends = ['ProtocolLib']
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "src/main/resources", "src/main/configs"
+        }
+    }
 }
 
 shadowJar {

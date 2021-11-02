@@ -14,6 +14,8 @@ public class Game extends BukkitRunnable {
 
     long gameTime = 0;
     long startTime = 0;
+    
+    Boolean active = false;
 
     public Game(Core instance) {
         this.instance = instance;
