@@ -12,14 +12,18 @@ public class TwitchEventsHandler {
 
     Core instance;
 
-    String PURPLE = ChatColor.of("#5b51c2") + "";
-    String GREEN = ChatColor.of("#43d07e") + "";
+    String PURPLE = "<#5b51c2>";
+    String GREEN = "<#43d07e>";
 
-    String RED = ChatColor.of("#ff1418") + "";
+    String RED = "<#ff1418>";
     String WHITE = ChatColor.WHITE + "";
 
-    String ORANGE = ChatColor.of("#ff9514") + "";
-    String LIME = ChatColor.of("#95ff14") + "";
+    String ORANGE = "<#ff9514>";
+    String LIME = "<#95ff14>";
+
+    String GOLD = "<#eaa72a>";
+
+    String LIGHT_WHITE = "<#BABA9B>";
 
     public TwitchEventsHandler(Core instance){
         this.instance = instance;
@@ -29,40 +33,69 @@ public class TwitchEventsHandler {
     public void onCheer(CheerEvent e){
         var game = instance.getGame();
         if(game.getActive()){
+            var twitchEvents = game.getTwitchEvents();
             var user = e.getUser().getName();
             var canje = "";
             var bits = e.getBits();
-            switch (bits) {
-                case 100 ->{
-
-                    
-                }
+            
+            if(twitchEvents.containsKey(bits)){
+                var event = twitchEvents.get(bits);
+                event.getConsumer().accept(true);
+                canje = event.getName();
             }
 
-            instance.broadcastMessage(GREEN + user + PURPLE + " biteo " + GREEN + "x" + e.getBits() + PURPLE + canje);
+            instance.broadcastMessage(GREEN + user + PURPLE + " biteo " + GREEN + "x" + e.getBits() + GOLD + canje);
+            
         }
     }
 
     @EventSubscriber
     public void onSub(SubscriptionEvent e){
         var game = instance.getGame();
+    
         if(game.getActive()){
+
             var canje = "";
+            var typeSub = "";
+
+            switch (e.getSubPlan()) {
+                case TIER1->{
+                    typeSub = "Tier 1";
+
+                }
+                case TIER2->{
+                    typeSub = "Tier 2";
+
+                }
+                case TIER3->{
+                    typeSub = "Tier 3";
+
+                }
+                case TWITCH_PRIME->{
+                    typeSub = "Prime";
+                    
+                }
+
+                case NONE -> throw new UnsupportedOperationException("Unimplemented case: " + e.getSubPlan());
+                default -> throw new IllegalArgumentException("Unexpected value: " + e.getSubPlan());
+            }
 
             if(e.getGifted()){
                 var user = e.getGiftedBy().getName();
                 var subs = e.getGiftMonths();
 
-                instance.broadcastMessage(GREEN + user + PURPLE + " gift sub " + GREEN + "x" + subs + PURPLE + canje);
+                instance.broadcastMessage(GREEN + user + PURPLE + " gift sub "  + typeSub + GREEN + "x" + subs + GOLD + canje);
                 
             }else{
                 var user = e.getUser().getName();
                 
-                instance.broadcastMessage(GREEN + user + PURPLE + " sub! " + GREEN + canje);
+                instance.broadcastMessage(GREEN + user + PURPLE + " sub " + typeSub + "! " + GOLD + canje);
             }
             
         }
     }
+
+    
 
     @EventSubscriber
     public void onDonation(DonationEvent e){

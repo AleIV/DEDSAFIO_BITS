@@ -19,7 +19,9 @@ import kr.entree.spigradle.annotations.SpigotPlugin;
 import lombok.Getter;
 import me.aleiv.core.paper.commands.GlobalCMD;
 import me.aleiv.core.paper.listeners.GlobalListener;
+import me.aleiv.core.paper.listeners.MobListener;
 import me.aleiv.core.paper.listeners.TwitchEventsHandler;
+import me.aleiv.core.paper.utilities.TCT.BukkitTCT;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
@@ -39,12 +41,15 @@ public class Core extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
+        BukkitTCT.registerPlugin(this);
+
         game = new Game(this);
         game.runTaskTimerAsynchronously(this, 0L, 20L);
 
         //LISTENERS
 
-        Bukkit.getPluginManager().registerEvents(new GlobalListener(this), this);
+        registerListener(new GlobalListener(this));
+        registerListener(new MobListener(this));
 
 
         //COMMANDS
