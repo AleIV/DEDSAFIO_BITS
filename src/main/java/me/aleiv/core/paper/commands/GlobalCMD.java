@@ -26,7 +26,6 @@ public class GlobalCMD extends BaseCommand {
         var game = instance.getGame();
         game.setActive(bool);
         sender.sendMessage(ChatColor.DARK_PURPLE + "Twitch events " + bool);
-        
 
     }
 }

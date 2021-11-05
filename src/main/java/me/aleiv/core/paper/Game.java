@@ -17,9 +17,15 @@ public class Game extends BukkitRunnable {
     
     Boolean active = false;
 
+    EffectStorage effectStorage;
+    MobStorage mobStorage;
+
     public Game(Core instance) {
         this.instance = instance;
         this.startTime = System.currentTimeMillis();
+
+        this.mobStorage = new MobStorage(instance);
+        this.effectStorage = new EffectStorage(instance);
 
     }
 

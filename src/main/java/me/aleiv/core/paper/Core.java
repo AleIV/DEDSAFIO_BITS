@@ -19,6 +19,7 @@ import kr.entree.spigradle.annotations.SpigotPlugin;
 import lombok.Getter;
 import me.aleiv.core.paper.commands.GlobalCMD;
 import me.aleiv.core.paper.listeners.GlobalListener;
+import me.aleiv.core.paper.listeners.TwitchEventsHandler;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.title.Title;
