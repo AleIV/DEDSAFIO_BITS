@@ -55,7 +55,7 @@ public class TwitchEventsHandler {
         }
     }
 
-    //@EventSubscriber
+    @EventSubscriber
     public void onSub(SubscriptionEvent e){
         var game = instance.getGame();
     
@@ -101,10 +101,5 @@ public class TwitchEventsHandler {
         }
     }
 
-    
 
-    //@EventSubscriber
-    public void onDonation(DonationEvent e){
-
-    }
 }
