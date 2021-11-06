@@ -51,6 +51,7 @@ public class MobStorage {
 
     public void spawnPiglin(Location loc){
         var piglin = (Piglin) spawnEntity(loc, EntityType.PIGLIN);
+        piglin.setRemoveWhenFarAway(true);
 
         piglin.setImmuneToZombification(true);
             piglin.setAdult();
@@ -155,6 +156,7 @@ public class MobStorage {
 
     public void spawnCreeper(Location loc){
         var creeper = (Creeper) spawnEntity(loc, EntityType.CREEPER);
+        creeper.setRemoveWhenFarAway(true);
 
         switch (random.nextInt(5)) {
             case 1: {
@@ -222,6 +224,7 @@ public class MobStorage {
 
     public void spawnSpider(Location loc) {
         var spider = (Spider) spawnEntity(loc, EntityType.SPIDER);
+        spider.setRemoveWhenFarAway(true);
 
         spider.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * 600, 1));
         spider.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 600, 1));
@@ -251,21 +254,26 @@ public class MobStorage {
     }
 
     public void spawnMage(Location loc) {
-        var evoker = (Evoker) spawnEntity(loc, EntityType.EVOKER);
 
         switch (random.nextInt(3)) {
         case 1: {
+            var evoker = (Evoker) spawnEntity(loc, EntityType.EVOKER);
             evoker.setCustomName(ChatColor.AQUA + "Warped Mage");
+            evoker.setRemoveWhenFarAway(true);
         }
             break;
 
         case 2: {
+            var evoker = (Evoker) spawnEntity(loc, EntityType.EVOKER);
             evoker.setCustomName(ChatColor.AQUA + "Purple Mage");
+            evoker.setRemoveWhenFarAway(true);
         }
             break;
 
         default: {
-            var illusioner = (Illusioner) evoker.getWorld().spawnEntity(evoker.getLocation(), EntityType.ILLUSIONER);
+
+            var illusioner = (Illusioner) loc.getWorld().spawnEntity(loc, EntityType.ILLUSIONER);
+            illusioner.setRemoveWhenFarAway(true);
             illusioner.setCustomName(ChatColor.AQUA + "Illusioner");
 
             var magicStaff = new ItemStack(Material.BOW);
@@ -283,6 +291,7 @@ public class MobStorage {
 
     public void spawnMountainer(Location loc) {
         var vindicator = (Vindicator) spawnEntity(loc, EntityType.VINDICATOR);
+        vindicator.setRemoveWhenFarAway(true);
 
         vindicator.setCustomName(ChatColor.GOLD + "Mountaineer");
         vindicator.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * 300, 1));
@@ -295,6 +304,7 @@ public class MobStorage {
 
     public void spawnRaider(Location loc) {
         var pillager = (Pillager) spawnEntity(loc, EntityType.PILLAGER);
+        pillager.setRemoveWhenFarAway(true);
 
         var gun = new ItemStack(Material.CROSSBOW);
         var meta = (CrossbowMeta) gun.getItemMeta();
@@ -331,18 +341,21 @@ public class MobStorage {
 
     public void spawnRedstoneGolem(Location loc) {
         var ravager = (Ravager) spawnEntity(loc, EntityType.RAVAGER);
+        ravager.setRemoveWhenFarAway(true);
         ravager.setCustomName(ChatColor.RED + "Redstone Golem");
 
     }
 
     public void spawnRavagerPowerfull(Location loc) {
         var ravager = (Ravager) spawnEntity(loc, EntityType.RAVAGER);
+        ravager.setRemoveWhenFarAway(true);
         ravager.setCustomName(ChatColor.BLUE + "Ravager Powerful");
 
     }
 
     public void spawnWitherSkeleton(Location loc) {
         var skeleton = (WitherSkeleton) spawnEntity(loc, EntityType.WITHER_SKELETON);
+        skeleton.setRemoveWhenFarAway(true);
         skeleton.setCustomName(ChatColor.RED + "The Death");
 
         var weapon = new ItemStack(Material.NETHERITE_SWORD);
@@ -358,6 +371,7 @@ public class MobStorage {
     public void spawnChef(Location loc) {
         var chef = (Husk) spawnEntity(loc, EntityType.HUSK);
 
+        chef.setRemoveWhenFarAway(true);
         chef.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 20 * 600, 0));
 
         var chefHat = new ItemStack(Material.CARVED_PUMPKIN);
@@ -389,7 +403,9 @@ public class MobStorage {
     }
 
     public void spawnSkeleton(Location loc) {
+        
         var skeleton = (Skeleton) spawnEntity(loc, EntityType.SKELETON);
+        skeleton.setRemoveWhenFarAway(true);
 
         switch (random.nextInt(4)) {
         case 1: {

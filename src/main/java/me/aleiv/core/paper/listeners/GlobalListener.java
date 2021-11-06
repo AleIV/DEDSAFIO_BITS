@@ -1,6 +1,5 @@
 package me.aleiv.core.paper.listeners;
 
-import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -9,10 +8,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import me.aleiv.core.paper.Core;
-import me.aleiv.core.paper.utilities.TCT.BukkitTCT;
 
 public class GlobalListener implements Listener{
     
@@ -35,6 +32,7 @@ public class GlobalListener implements Listener{
     @EventHandler
     public void onDamage(EntityDamageEvent e){
 
+        var entity = e.getEntity();
         var cause = e.getCause();
         var damage = instance.getGame().getDamageMultiplier();
 
@@ -50,6 +48,10 @@ public class GlobalListener implements Listener{
         }
 
         if(cause == DamageCause.WITHER || cause == DamageCause.MAGIC){
+            e.setDamage(e.getDamage()*damage);
+        }
+
+        if(cause == DamageCause.ENTITY_ATTACK && entity instanceof Player player){
             e.setDamage(e.getDamage()*damage);
         }
 

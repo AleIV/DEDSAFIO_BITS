@@ -48,10 +48,30 @@ public class GlobalCMD extends BaseCommand {
         sender.sendMessage(ChatColor.GREEN + "Damage amplifier set to " + change);
     }
 
-    @Subcommand("ruedita")
-    public void ruedita(CommandSender sender, String str){
+    @Subcommand("change")
+    @CommandAlias("change")
+    public void change(CommandSender sender, String change) {
+        var changes = instance.getGame().getChanges();
+        if(changes.containsKey(change)){
+            var bool = !changes.get(change);
+            changes.put(change, bool);
+            sender.sendMessage(ChatColor.GREEN + change + " set to " + bool);
+        }
+    }
+
+    @Subcommand("play")
+    public void play(CommandSender sender, Integer i){
         var game = instance.getGame();
-        game.ruedita();
+        game.getTwitchEvents().get(i).getConsumer().accept(true);
+        sender.sendMessage(ChatColor.GREEN + "Played " + i + " bits.");
+    }
+
+    @Subcommand("currentChange")
+    public void current(CommandSender sender, Integer i){
+        var game = instance.getGame();
+        game.setCurrentChange(i);
+        sender.sendMessage(ChatColor.GREEN + "Current new change " + i);
+        game.getEffectStorage().refreshChange(i);
 
     }
 

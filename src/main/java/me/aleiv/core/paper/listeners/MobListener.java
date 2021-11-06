@@ -6,12 +6,12 @@ import com.destroystokyo.paper.event.entity.EnderDragonFireballHitEvent;
 import com.destroystokyo.paper.event.entity.EnderDragonFlameEvent;
 
 import org.bukkit.Bukkit;
-import org.bukkit.DyeColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.EnderDragon;
 import org.bukkit.entity.Enderman;
 import org.bukkit.entity.EntityType;
@@ -22,12 +22,11 @@ import org.bukkit.entity.Phantom;
 import org.bukkit.entity.Pillager;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Shulker;
-import org.bukkit.entity.ShulkerBullet;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.entity.Spider;
 import org.bukkit.entity.Vex;
 import org.bukkit.entity.WitherSkull;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -56,6 +55,42 @@ public class MobListener implements Listener{
 
     public MobListener(Core instance){
         this.instance = instance;
+    }
+    
+    @EventHandler
+    public void creature(CreatureSpawnEvent e){
+        var game = instance.getGame();
+        var changes= game.getChanges();
+        var entity = e.getEntity();
+        var loc = entity.getLocation();
+
+        var mobs = game.getMobStorage();
+
+        var cause = e.getSpawnReason();
+
+        if(!cause.toString().contains("NATURAL")) return;
+        
+        if(entity instanceof Zombie zombie && changes.get("ZOMBIE")){
+            e.setCancelled(true);
+            mobs.spawnChef(loc);
+
+        }else if(entity instanceof Skeleton skeleton && changes.get("SKELETON")){
+            e.setCancelled(true);
+            if(random.nextInt(10) == 1){
+                mobs.spawnWitherSkeleton(loc);
+            }else{
+                mobs.spawnSkeleton(loc);
+            }
+
+        }else if(entity instanceof Creeper creeper && changes.get("CREEPER")){
+            e.setCancelled(true);
+            mobs.spawnCreeper(loc);
+
+        }else if(entity instanceof Spider spider && changes.get("SPIDER")){
+            e.setCancelled(true);
+
+            mobs.spawnSpider(loc);
+        }
     }
 
     
@@ -346,50 +381,6 @@ public class MobListener implements Listener{
             var loc = entity.getLocation();
             entity.getWorld().spawnEntity(loc, EntityType.ZOMBIE);
 
-        }
-
-    }
-
-    @EventHandler
-    public void powers(EntityDamageByEntityEvent e){
-        var entity = e.getEntity();
-        var proj = e.getDamager();
-        if(proj instanceof ShulkerBullet && entity instanceof Player){
-            var bullet = (ShulkerBullet) proj;
-            var shulker = (Shulker) bullet.getShooter();
-            var player = (Player) entity;
-
-            if(shulker.getCustomName() == null){
-                switch (random.nextInt(3)) {
-                    case 1:{
-                        shulker.setCustomName(ChatColor.GOLD + "Fire Shulker"); 
-                        shulker.setColor(DyeColor.RED);
-                    }break;
-                        
-                    case 2:{
-                        shulker.setCustomName(ChatColor.BLACK + "Radioactive Shulker");
-                        shulker.setColor(DyeColor.BLACK);
-                    }break;
-    
-                    default:{
-                        shulker.setCustomName(ChatColor.GREEN + "Poisonous Shulker"); 
-                        shulker.setColor(DyeColor.GREEN);
-                    }break;
-                }
-            }else if(shulker.getCustomName().contains("Fire")){
-                player.setFireTicks(20*10);
-
-            }else if(shulker.getCustomName().contains("Radioactive")){
-                player.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 10*20, 0));
-
-            }else if(shulker.getCustomName().contains("Poisonous")){
-                player.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 10*20, 0));
-
-            }
-
-            Bukkit.getScheduler().runTaskLater(instance, task->{
-                player.getLocation().createExplosion(2, true, true);
-            }, 5);
         }
 
     }

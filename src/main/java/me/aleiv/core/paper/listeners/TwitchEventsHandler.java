@@ -44,12 +44,18 @@ public class TwitchEventsHandler {
                 canje = event.getName();
             }
 
-            instance.broadcastMessage(GREEN + user + PURPLE + " biteo " + GREEN + "x" + e.getBits() + GOLD + canje);
+            if(bits >= 5000){
+                instance.broadcastMessage(RED + user + LIGHT_WHITE + " biteo " + RED + "x" + e.getBits() + GOLD + " " +  canje);
+
+            }else{
+                instance.broadcastMessage(GREEN + user + PURPLE + " biteo " + GREEN + "x" + e.getBits() + GOLD + " " +  canje);
+            }
+            
             
         }
     }
 
-    @EventSubscriber
+    //@EventSubscriber
     public void onSub(SubscriptionEvent e){
         var game = instance.getGame();
     
@@ -97,7 +103,7 @@ public class TwitchEventsHandler {
 
     
 
-    @EventSubscriber
+    //@EventSubscriber
     public void onDonation(DonationEvent e){
 
     }
