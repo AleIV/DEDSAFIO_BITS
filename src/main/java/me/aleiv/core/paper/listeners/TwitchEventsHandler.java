@@ -2,8 +2,6 @@ package me.aleiv.core.paper.listeners;
 
 import com.github.philippheuer.events4j.simple.domain.EventSubscriber;
 import com.github.twitch4j.chat.events.channel.CheerEvent;
-import com.github.twitch4j.chat.events.channel.DonationEvent;
-import com.github.twitch4j.chat.events.channel.SubscriptionEvent;
 
 import me.aleiv.core.paper.Core;
 import net.md_5.bungee.api.ChatColor;
