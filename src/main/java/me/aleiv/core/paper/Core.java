@@ -1,6 +1,7 @@
 package me.aleiv.core.paper;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.philippheuer.events4j.simple.SimpleEventHandler;
@@ -58,20 +59,22 @@ public class Core extends JavaPlugin {
         commandManager.registerCommand(new GlobalCMD(this));
 
         //configuration
-        this.saveDefaultConfig();
-        FileConfiguration config = getConfig();
+        //this.saveDefaultConfig();
+        //FileConfiguration config = getConfig();
 
         //Build twich client
         client = TwitchClientBuilder.builder()
-            .withClientId(config.getString("client_id"))
-            .withClientSecret(config.getString("client_secret"))
+            .withClientId("cs94t29c7esp4jw8i2yulhs4s5rxoi")
+            .withClientSecret("nadaf3p5c5shykv6wtz0y5x5p0h936")
             .withEnableChat(true)
             .withEnableHelix(true)
             .build();
         
         //join the twitch chats of these channels and enable stream/follow events
 
-        List<String> channels = config.getStringList("channels");
+        List<String> channels = new ArrayList<>();
+        channels.add("elded");
+        
         if(!channels.isEmpty()){
             client.getClientHelper().enableFollowEventListener(channels);
             channels.forEach(channel -> client.getChat().joinChannel(channel));
